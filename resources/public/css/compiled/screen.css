@@ -9,6 +9,12 @@ body {
   padding: 0;
 }
 
+.app-header {
+  color: #23CF5F;
+  font-size: 80px;
+  font-weight: 300;
+}
+
 .app-name {
   color: #23CF5F;
 }
