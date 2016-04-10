@@ -17,4 +17,11 @@
   [:.app-header {:color spotify-color
                  :font-size "80px"
                  :font-weight 300}]
+  [:.btn {:color   spotify-color
+          :padding "10px 20px 10px 20px"
+          :margin-top "10px"
+          :margin-bottom "10px"
+          :background "#424242"
+          :border-radius "10px"
+          :display "inline-block"}]
   [:.app-name {:color spotify-color}])

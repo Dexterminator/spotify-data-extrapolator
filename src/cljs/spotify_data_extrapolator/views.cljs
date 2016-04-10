@@ -12,6 +12,7 @@
       [:div
        [app-header]
        [:div "Hello from " [:span.app-name @name] ". This is the Home Page."]
+       [:div.btn "Search"]
        [:div [:a {:href "#/about"} "go to About Page"]]])))
 
 
