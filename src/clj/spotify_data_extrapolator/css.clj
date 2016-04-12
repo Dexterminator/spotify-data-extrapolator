@@ -2,7 +2,8 @@
   (:require [garden.def :refer [defstyles defcssfn]]
             [garden.stylesheet :refer [at-import]]))
 
-(def spotify-color "#23CF5F")
+(def spotify-green "#23CF5F")
+(def dark-grey "#424242")
 (def page-width "980px")
 (defcssfn url)
 
@@ -14,14 +15,17 @@
           :width       page-width
           :margin      "0 auto"
           :padding     0}]
-  [:.app-header {:color spotify-color
-                 :font-size "80px"
+  [:.app-header {:color       spotify-green
+                 :font-size   "80px"
                  :font-weight 300}]
-  [:.btn {:color   spotify-color
-          :padding "10px 20px 10px 20px"
-          :margin-top "10px"
+  [:.btn {:color         spotify-green
+          :padding       "10px 20px 10px 20px"
+          :margin-top    "10px"
           :margin-bottom "10px"
-          :background "#424242"
+          :background    dark-grey
           :border-radius "10px"
-          :display "inline-block"}]
-  [:.app-name {:color spotify-color}])
+          :display       "inline-block"}
+   [:&:hover {:background "grey"
+              :cursor "pointer"}]
+   [:&:active {:background "black"}]]
+  [:.app-name {:color spotify-green}])
