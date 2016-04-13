@@ -1,5 +1,5 @@
 (ns spotify-data-extrapolator.views
-    (:require [re-frame.core :as re-frame]))
+    (:require [re-frame.core :refer [subscribe dispatch]]))
 
 (defn app-header []
   [:h1.app-header "Spotify data extrapolator"])
@@ -7,12 +7,14 @@
 ;; home
 
 (defn home-panel []
-  (let [name (re-frame/subscribe [:name])]
+  (let [name (subscribe [:name])
+        artists (subscribe [:artists])]
     (fn []
       [:div
        [app-header]
        [:div "Hello from " [:span.app-name @name] ". This is the Home Page."]
-       [:div.btn "Search"]
+       [:div.btn {:on-click #(dispatch [:get-artists "Black Sabbath"])} "Search"]
+       [:div (str "Artists: " @artists)]
        [:div [:a {:href "#/about"} "go to About Page"]]])))
 
 
@@ -34,6 +36,6 @@
 (defmethod panels :default [] [:div])
 
 (defn main-panel []
-  (let [active-panel (re-frame/subscribe [:active-panel])]
+  (let [active-panel (subscribe [:active-panel])]
     (fn []
       (panels @active-panel))))
