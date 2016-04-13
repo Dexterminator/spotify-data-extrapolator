@@ -16,7 +16,10 @@
 (register-handler
   :artists-response
   (fn [db [_ response]]
-    (assoc db :artists (js->clj response))))
+    (let [artists (js->clj response)
+          items (get-in artists [:artists :items])
+          names (map :name items)]
+      (assoc db :artists names))))
 
 (register-handler
   :failed-response
