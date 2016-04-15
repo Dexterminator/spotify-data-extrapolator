@@ -26,6 +26,8 @@
           :border-radius "10px"
           :display       "inline-block"}
    [:&:hover {:background "grey"
-              :cursor "pointer"}]
+              :cursor     "pointer"}]
    [:&:active {:background "black"}]]
-  [:.app-name {:color spotify-green}])
+  [:.app-name {:color spotify-green}]
+  [:.artist-image {:height        "150px"
+                   :border-radius "5px"}])

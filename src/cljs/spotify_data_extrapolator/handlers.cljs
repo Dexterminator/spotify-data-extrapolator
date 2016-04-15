@@ -16,10 +16,15 @@
 (register-handler
   :artists-response
   (fn [db [_ response]]
-    (let [artists (js->clj response)
-          items (get-in artists [:artists :items])
-          names (map :name items)]
-      (assoc db :artists names))))
+    (let [clj-response (js->clj response)
+          items (get-in clj-response [:artists :items])
+          artists (map
+                    (fn [coll]
+                      (assoc (select-keys coll [:name :id])
+                        :image
+                        (:url (first (:images coll)))))
+                    items)]
+      (assoc db :artists artists))))
 
 (register-handler
   :failed-response
@@ -33,4 +38,4 @@
       artist
       {:handler       #(dispatch [:artists-response %])
        :error-handler #(dispatch [:failed-response %])})
-    (assoc db :loading? true)))
+    db))
