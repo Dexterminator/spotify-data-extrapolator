@@ -7,14 +7,14 @@
                  [garden "1.3.2"]
                  [compojure "1.5.0"]
                  [ring "1.4.0"]
-                 [cljs-ajax "0.5.4"]]
+                 [cljs-ajax "0.5.4"]
+                 [figwheel-sidecar "0.5.0"]]
 
   :min-lein-version "2.5.3"
 
-  :source-paths ["src/clj"]
+  :source-paths ["src/clj" "script"]
 
   :plugins [[lein-cljsbuild "1.1.3"]
-            [lein-figwheel "0.5.0-6"]
             [lein-garden "0.2.6"]
             [lein-doo "0.1.6"]]
 

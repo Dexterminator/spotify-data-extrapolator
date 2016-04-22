@@ -5,6 +5,8 @@
 /resources/public/css/compiled
 *.iml
 out
+.lein-repl-history
+.nrepl-port
 
 # Created by https://www.gitignore.io/api/intellij,osx
 
