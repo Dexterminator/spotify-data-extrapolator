@@ -6,21 +6,21 @@
 
 ;; home
 
-(defn home-panel []
-  (let [name (subscribe [:name])
-        artists (subscribe [:artists])]
+(defn artist-list []
+  (let [artists (subscribe [:artists])]
     (fn []
-      [:div
-       [app-header]
-       [:div "Hello from " [:span.app-name @name] ". This is the Home Page."]
-       [:div [:input {:type "text" :on-change #(dispatch [:artist-search-changed (-> % .-target .-value)])}]]
-       [:div.btn {:on-click #(dispatch [:get-artists "Black"])} "Search"]
-       [:div.artists
-        (for [artist @artists]
-          ^{:key artist} [:div
-                          [:h3 (:name artist)]
-                          (if (:image artist) [:img.artist-image {:src (:image artist)}])])]
-       [:div [:a {:href "#/about"} "go to About Page"]]])))
+      [:div {:class "artists"}
+       (for [artist @artists]
+         ^{:key artist} [:div.artist (:name artist)])])))
+
+(defn home-panel []
+  (fn []
+    [:div
+     [app-header]
+     [:div "Start typing to search!"]
+     [:div [:input {:type "text" :on-change #(dispatch [:artist-search-changed (-> % .-target .-value)])}]]
+     [artist-list]
+     [:div [:a {:href "#/about"} "go to About Page"]]]))
 
 
 ;; about

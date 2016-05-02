@@ -1,11 +1,21 @@
 (ns spotify-data-extrapolator.css
   (:require [garden.def :refer [defstyles defcssfn]]
-            [garden.stylesheet :refer [at-import]]))
+            [garden.stylesheet :refer [at-import]]
+            [garden.selectors :refer [defpseudoelement defselector css-selector] :as s]
+            [garden.core :refer [css]]))
 
 (def spotify-green "#23CF5F")
 (def dark-grey "#424242")
 (def page-width "980px")
 (defcssfn url)
+(defpseudoelement -webkit-scrollbar)
+(defpseudoelement -webkit-scrollbar-thumb)
+(s/defclass artists)
+(def artist-scrollbar (s/selector (artists -webkit-scrollbar)))
+(def artist-scrollbar-thumb (s/selector (artists -webkit-scrollbar-thumb)))
+(css [artist-scrollbar-thumb {:border-radius      "4px"
+                              :background-color   "rgba (0, 0, 0, .5)"
+                              :-webkit-box-shadow "0 0 1px rgba (255, 255, 255, .5)"}])
 
 (defstyles screen
   (at-import (url "https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic"))
@@ -28,6 +38,16 @@
    [:&:hover {:background "grey"
               :cursor     "pointer"}]
    [:&:active {:background "black"}]]
-  [:.app-name {:color spotify-green}]
   [:.artist-image {:height        "150px"
-                   :border-radius "5px"}])
+                   :border-radius "5px"}]
+  [:.artists {:height   "300px"
+              :overflow "scroll"}]
+  [:.artist {:font-size   "20px"
+             :font-weight 400}
+   [:&:hover {:cursor "pointer"
+              :color  spotify-green}]]
+  [artist-scrollbar {:-webkit-appearance "none"
+                     :width              "7px"}]
+  [artist-scrollbar-thumb {:border-radius      "4px"
+                           :background-color   "rgba(0, 0, 0, .5)"
+                           :-webkit-box-shadow "0 0 1px rgba (255, 255, 255, .5)"}])
