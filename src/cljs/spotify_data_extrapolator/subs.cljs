@@ -16,3 +16,8 @@
   :artists
   (fn [db _]
     (reaction (:artists @db))))
+
+(re-frame/register-sub
+  :inspired-by-artists
+  (fn [db _]
+    (reaction (:inspired-by-artists @db))))

@@ -17,6 +17,7 @@
                               :background-color   "rgba (0, 0, 0, .5)"
                               :-webkit-box-shadow "0 0 1px rgba (255, 255, 255, .5)"}])
 
+
 (defstyles screen
   (at-import (url "https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic"))
   [:body {:font-family ["Lato" "sans-serif"]
@@ -25,6 +26,10 @@
           :width       page-width
           :margin      "0 auto"
           :padding     0}]
+  [:a {:text-decoration "none"
+       :color           dark-grey}
+   [:&:hover {:cursor "pointer"
+              :color  spotify-green}]]
   [:.app-header {:color       spotify-green
                  :font-size   "80px"
                  :font-weight 300}]
@@ -43,9 +48,7 @@
   [:.artists {:height   "300px"
               :overflow "scroll"}]
   [:.artist {:font-size   "20px"
-             :font-weight 400}
-   [:&:hover {:cursor "pointer"
-              :color  spotify-green}]]
+             :font-weight 400}]
   [artist-scrollbar {:-webkit-appearance "none"
                      :width              "7px"}]
   [artist-scrollbar-thumb {:border-radius      "4px"

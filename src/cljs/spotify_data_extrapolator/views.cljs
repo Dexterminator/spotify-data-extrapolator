@@ -11,7 +11,9 @@
     (fn []
       [:div {:class "artists"}
        (for [artist @artists]
-         ^{:key artist} [:div.artist (:name artist)])])))
+         ^{:key artist} [:div
+                         [:a.artist {:href (str "#/inspired-by/" (:id artist))}
+                          (:name artist)]])])))
 
 (defn home-panel []
   (fn []
@@ -19,25 +21,24 @@
      [app-header]
      [:div "Start typing to search!"]
      [:div [:input {:type "text" :on-change #(dispatch [:artist-search-changed (-> % .-target .-value)])}]]
-     [artist-list]
-     [:div [:a {:href "#/about"} "go to About Page"]]]))
+     [artist-list]]))
 
+;; inspired by
 
-;; about
-
-(defn about-panel []
-  (fn []
-    [:div
-     [app-header]
-     [:div "Made with Clojure by Dexter Gramfors and Andreas Johansson."]
-     [:div [:a {:href "#/"} "go to Home Page"]]]))
-
+(defn inspired-by-panel []
+  (let [inspired-by-artists (subscribe [:inspired-by-artists])]
+    (fn []
+      [:div
+       [app-header]
+       [:div
+        (for [artist @inspired-by-artists]
+          ^{:key artist} [:div (:name artist)])]])))
 
 ;; main
 
 (defmulti panels identity)
 (defmethod panels :home-panel [] [home-panel])
-(defmethod panels :about-panel [] [about-panel])
+(defmethod panels :inspired-by-panel [] [inspired-by-panel])
 (defmethod panels :default [] [:div])
 
 (defn main-panel []

@@ -4,6 +4,10 @@
             [spotify-data-extrapolator.api :as api]
             [clojure.string :as str]))
 
+(defn artist-data [artists]
+  (map #(-> (select-keys % [:name :id])
+            (assoc :image ((comp :url first :images) %))) artists))
+
 (register-handler
   :initialize-db
   (fn [_ _]
@@ -26,9 +30,7 @@
   (fn [db [_ response]]
     (let [clj-response (js->clj response)
           items (get-in clj-response [:artists :items])
-          artists (map #(-> (select-keys % [:name :id])
-                            (assoc :image ((comp :url first :images) %)))
-                       items)]
+          artists (artist-data items)]
       (assoc db :artists artists))))
 
 (register-handler
@@ -40,9 +42,28 @@
   :get-artists
   (fn [db [_ artist]]
     (if-not (str/blank? artist)
-      (do (api/get-artists
+      (do (api/search-artists
             artist
             {:handler       #(dispatch [:artists-response %])
              :error-handler #(dispatch [:failed-response %])})
           db)
-      (assoc db :artists nil))))
+      (dissoc db :artists))))
+
+(register-handler
+  :related-artists-response
+  (fn [db [_ response]]
+    (let [clj-response (js->clj response)
+          items (clj-response :artists)
+          artists (artist-data items)]
+      (.log js/console clj-response)
+      (dispatch [:set-active-panel :inspired-by-panel])
+      (assoc db :inspired-by-artists artists))))
+
+(register-handler
+  :inspired-by-search
+  (fn [db [_ id]]
+    (api/related-artists
+      id
+      {:handler       #(dispatch [:related-artists-response %])
+       :error-handler #(dispatch [:failed-response %])})
+    db))
