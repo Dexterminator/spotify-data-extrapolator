@@ -31,8 +31,10 @@
       [:div
        [app-header]
        [:div
-        (for [artist @inspired-by-artists]
-          ^{:key artist} [:div (:name artist)])]])))
+        (if (seq @inspired-by-artists)
+          (for [artist @inspired-by-artists]
+            ^{:key artist} [:div (:name artist)])
+          [:div "Did not find any influencing artists."])]])))
 
 ;; main
 
