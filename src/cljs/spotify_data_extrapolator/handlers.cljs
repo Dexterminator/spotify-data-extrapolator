@@ -21,7 +21,6 @@
 (register-handler
   :artist-search-changed
   (fn [db [_ artist-search]]
-    (.log js/console artist-search)
     (dispatch [:get-artists artist-search])
     db))
 
@@ -55,9 +54,10 @@
     (let [clj-response (js->clj response)
           items (clj-response :artists)
           artists (artist-data items)]
-      (.log js/console clj-response)
       (dispatch [:set-active-panel :inspired-by-panel])
-      (assoc db :inspired-by-artists artists))))
+      (-> db
+          (dissoc :artists)
+          (assoc :inspired-by-artists artists)))))
 
 (register-handler
   :inspired-by-search
