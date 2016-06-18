@@ -3,7 +3,8 @@
             [spotify-data-extrapolator.db :as db]
             [spotify-data-extrapolator.api :as api]
             [clojure.string :as str]
-            [spotify-data-extrapolator.js-utils :refer [log]]))
+            [spotify-data-extrapolator.js-utils :refer [log]])
+  (:require-macros [spotify-data-extrapolator.macros :refer [inspect]]))
 
 (defn artist-data [artists]
   (map #(-> (select-keys % [:name :id])
