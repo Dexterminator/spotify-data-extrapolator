@@ -2,7 +2,8 @@
   (:require [re-frame.core :refer [register-handler dispatch]]
             [spotify-data-extrapolator.db :as db]
             [spotify-data-extrapolator.api :as api]
-            [clojure.string :as str]))
+            [clojure.string :as str]
+            [spotify-data-extrapolator.js-utils :refer [log]]))
 
 (defn artist-data [artists]
   (map #(-> (select-keys % [:name :id])
@@ -34,8 +35,9 @@
 
 (register-handler
   :failed-response
-  (fn [_ [_ {:keys [status status-text]}]]
-    (.log js/console (str "Something went wrong: " status " " status-text))))
+  (fn [db [_ {:keys [status status-text]}]]
+    (log (str "Something went wrong: " status " " status-text))
+    db))
 
 (register-handler
   :get-artists
