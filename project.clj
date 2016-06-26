@@ -8,7 +8,8 @@
                  [compojure "1.5.0"]
                  [ring "1.4.0"]
                  [cljs-ajax "0.5.4"]
-                 [figwheel-sidecar "0.5.0"]]
+                 [figwheel-sidecar "0.5.0"]
+                 [binaryage/devtools "0.6.1"]]
 
   :min-lein-version "2.5.3"
 
