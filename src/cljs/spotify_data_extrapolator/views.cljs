@@ -2,7 +2,8 @@
   (:require [re-frame.core :refer [subscribe dispatch]]))
 
 (defn app-header []
-  [:h1.app-header "Spotify data extrapolator"])
+  [:a {:href "#"}
+   [:h1.app-header "Spotify data extrapolator"]])
 
 ;; home
 
@@ -33,7 +34,8 @@
        [:div
         (if (seq @inspired-by-artists)
           (for [artist @inspired-by-artists]
-            ^{:key artist} [:div (:name artist)])
+            ^{:key artist} [:div [:a.artist {:href (str "#/inspired-by/" (:id artist))}
+                                  (:name artist)]])
           [:div "Did not find any influencing artists."])]])))
 
 ;; main
