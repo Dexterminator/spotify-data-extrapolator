@@ -2,8 +2,13 @@
   (:require [re-frame.core :refer [subscribe dispatch]]))
 
 (defn app-header []
-  [:a {:href "#"}
-   [:h1.app-header "Spotify data extrapolator"]])
+  (let [artist (subscribe [:artist])]
+    (fn []
+      [:div
+       [:a {:href "#"}
+        [:h1.app-header "Spotify data extrapolator"]]
+       [:h2.artist @artist]])))
+
 
 ;; home
 
