@@ -6,6 +6,7 @@
 
 (def spotify-green "#23CF5F")
 (def dark-grey "#424242")
+(def background-color "#eee")
 (def page-width "980px")
 (defcssfn url)
 (defpseudoelement -webkit-scrollbar)
@@ -25,7 +26,8 @@
           :font-weight 300
           :width       page-width
           :margin      "0 auto"
-          :padding     0}]
+          :padding     0
+          :background background-color}]
   [:a {:text-decoration "none"
        :color           dark-grey}
    [:&:hover {:cursor "pointer"

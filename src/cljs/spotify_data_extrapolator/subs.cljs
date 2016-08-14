@@ -13,6 +13,11 @@
    (reaction (:active-panel @db))))
 
 (re-frame/register-sub
+  :artist
+  (fn [db _]
+    (reaction (:artist @db))))
+
+(re-frame/register-sub
   :artists
   (fn [db _]
     (reaction (:artists @db))))
