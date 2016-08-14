@@ -11,5 +11,8 @@
 (defn related-artists [id options]
   (GET (str spotify-base-url "/artists/" id "/related-artists") (merge options default-options)))
 
+(defn artist [id options]
+  (GET (str spotify-base-url "/artists/" id) (merge options default-options)))
+
 (defn artist-albums [id options]
   (GET (str spotify-base-url "/artists/" id "/albums") (merge options default-options)))

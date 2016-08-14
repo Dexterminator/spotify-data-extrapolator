@@ -11,7 +11,11 @@
             (assoc :image ((comp :url first :images) %))) artists))
 
 (defn set-active-panel-handler [db [active-panel]]
-  (assoc db :active-panel active-panel))
+  (assoc
+    (if (= active-panel :home-panel)
+           (dissoc db :artist)
+           db)
+    :active-panel active-panel))
 
 (defn artist-search-changed-handler [db [artist-search]]
   (dispatch [:get-artists artist-search])
@@ -45,11 +49,18 @@
           (dissoc :artists)
           (assoc :inspired-by-artists artists))))
 
+(defn artist-info-handler [db [response]]
+  (assoc db :artist (js->clj response)))
+
 (defn inspired-by-search-handler [db [id]]
   (api/related-artists
       id
       {:handler       #(dispatch [:related-artists-response %])
        :error-handler #(dispatch [:failed-response %])})
+  (api/artist
+    id
+    {:handler       #(dispatch [:artist-info %])
+     :error-handler #(dispatch [:failed-response %])})
   db)
 
 (register-handler
@@ -86,6 +97,11 @@
   :related-artists-response
   trim-v
   related-artists-response-handler)
+
+(register-handler
+  :artist-info
+  trim-v
+  artist-info-handler)
 
 (register-handler
   :inspired-by-search

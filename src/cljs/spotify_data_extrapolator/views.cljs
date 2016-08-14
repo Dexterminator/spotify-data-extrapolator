@@ -7,8 +7,7 @@
       [:div
        [:a {:href "#"}
         [:h1.app-header "Spotify data extrapolator"]]
-       [:h2.artist @artist]])))
-
+       [:h2.current-artist (:name @artist)]])))
 
 ;; home
 
